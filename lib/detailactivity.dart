@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:test1/editactivity.dart';
 
 class DetailActivity extends StatefulWidget {
   List list;
@@ -46,7 +47,13 @@ class _DetailActivityState extends State<DetailActivity> {
                     new RaisedButton(
                       child: new Text("Edit"),
                       color: Colors.green,
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (BuildContext context) => new EditActivity(
+                          list: widget.list,
+                          index: widget.index,
+                        ),
+                      )),
                     ),
                     new RaisedButton(
                       child: new Text("Delete"),

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:test1/home.dart';
-import 'package:test1/profile.dart';
-import 'package:test1/listactivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test1/home.dart';
 
-class MainMenu extends StatefulWidget {
+class MainMenuAdmin extends StatefulWidget {
   final VoidCallback signOut;
-  MainMenu(this.signOut);
+  MainMenuAdmin(this.signOut);
   @override
-  _MainMenuState createState() => _MainMenuState();
+  _MainMenuAdminState createState() => _MainMenuAdminState();
 }
 
-class _MainMenuState extends State<MainMenu> {
+class _MainMenuAdminState extends State<MainMenuAdmin> {
   int _SelectedTabIndex = 0;
 
   void _onNavBarTapped(int index) {
@@ -31,10 +29,7 @@ class _MainMenuState extends State<MainMenu> {
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-//      email = preferences.getString("email");
-//      nama = preferences.getString("nama");
-    });
+    setState(() {});
   }
 
   @override
@@ -48,8 +43,8 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     final _listPage = <Widget>[
       HomeScreen(),
-      ActivityScreen(),
-      ProfileScreen(),
+      // ActivityScreen(),
+      // ProfileScreen(),
     ];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[
@@ -57,14 +52,14 @@ class _MainMenuState extends State<MainMenu> {
         icon: Icon(Icons.home),
         title: Text('Home'),
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.list_sharp),
-        title: Text('Activity'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person),
-        title: Text('Profile'),
-      ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.list_sharp),
+      //   title: Text('Activity'),
+      // ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.person),
+      //   title: Text('Profile'),
+      // ),
     ];
 
     final _bottomNavBar = BottomNavigationBar(

@@ -1,11 +1,16 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:test1/detailactivity.dart';
 import 'package:test1/addactivity.dart';
 
-class ActivityScreen extends StatelessWidget {
+class ActivityScreen extends StatefulWidget {
+  @override
+  _ActivityScreenState createState() => _ActivityScreenState();
+}
+
+class _ActivityScreenState extends State<ActivityScreen> {
   Future<List> getdata() async {
     final response =
         await http.post("http://192.168.100.10/TimeReport/getdataactivity.php");
@@ -35,11 +40,6 @@ class ActivityScreen extends StatelessWidget {
         },
       ),
     );
-    // return Container(
-    //   child: Center(
-    //     child: Text('Menu Add Activity!'),
-    //   ),
-    // );
   }
 }
 
