@@ -29,11 +29,11 @@ class _MainMenuState extends State<MainMenu> {
 //  String email = "", nama = "";
 //  TabController tabController;
 
+  var id;
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-//      email = preferences.getString("email");
-//      nama = preferences.getString("nama");
+      id = preferences.getString("id");
     });
   }
 
@@ -42,6 +42,8 @@ class _MainMenuState extends State<MainMenu> {
     // TODO: implement initState
     super.initState();
     getPref();
+    print("Cek ID User Menu Staff");
+    print(id);
   }
 
   @override
