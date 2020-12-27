@@ -59,22 +59,6 @@ class _AddActivityState extends State<AddActivity> {
     getactivitylist();
   }
 
-  // void _showDatePicker() {
-  //   showDatePicker(
-  //           context: context,
-  //           initialDate: DateTime.now(),
-  //           firstDate: DateTime(2020),
-  //           lastDate: DateTime.now())
-  //       .then((value) {
-  //     if (value == null) {
-  //       return;
-  //     }
-  //     setState(() {
-  //       _datePicked = value;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

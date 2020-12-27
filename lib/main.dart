@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test1/AdminPage/mainmenuadmin.dart';
 import 'package:test1/mainmenu.dart';
 
 void main() {
@@ -20,7 +21,8 @@ enum LoginStatus { notSignIn, signIn }
 
 class _LoginState extends State<Login> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
-  String email, password;
+  String email, password, roleuser;
+  String userid;
   final _key = new GlobalKey<FormState>();
 
   bool _secureText = true;
@@ -48,35 +50,44 @@ class _LoginState extends State<Login> {
     String pesan = data['message'];
     String emailAPI = data['email'];
     String namaAPI = data['nama'];
+    String role = data['role'];
     String id = data['id'];
+
     if (value == 1) {
       setState(() {
         _loginStatus = LoginStatus.signIn;
-        savePref(value, emailAPI, namaAPI, id);
+        savePref(value, emailAPI, namaAPI, id, role);
       });
+      //print(role);
       print(pesan);
     } else {
       print(pesan);
     }
   }
 
-  savePref(int value, String email, String nama, String id) async {
+  savePref(int value, String email, String nama, String id, String role) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
+      roleuser = role;
+      userid = id;
       preferences.setInt("value", value);
       preferences.setString("nama", nama);
       preferences.setString("email", email);
       preferences.setString("id", id);
+      preferences.setString("role", role);
       preferences.commit();
     });
   }
 
-  var value;
+  var value, role, id;
+
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       value = preferences.getInt("value");
-
+      role = preferences.getString("role");
+      id = preferences.getString("id");
+      //print(id);
       _loginStatus = value == 1 ? LoginStatus.signIn : LoginStatus.notSignIn;
     });
   }
@@ -146,10 +157,17 @@ class _LoginState extends State<Login> {
         );
         break;
       case LoginStatus.signIn:
-        return MainMenu(signOut);
+        // print("Test userid");
+        // print(userid);
+        if (roleuser == "1") {
+          return MainMenuAdmin(signOut);
+        } else {
+          return MainMenu(signOut);
+        }
+        ;
+
+        //return MainMenuAdmin(signOut);
         break;
     }
   }
 }
-
-// class _RegisterState extends State<Register> {
