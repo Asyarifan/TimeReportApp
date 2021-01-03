@@ -1,8 +1,8 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:test1/listactivity.dart';
+import 'package:test1/StaffPage/listactivity.dart';
 import 'package:test1/MyTextFieldDatePicker.dart';
 
 class AddActivity extends StatefulWidget {
@@ -11,7 +11,7 @@ class AddActivity extends StatefulWidget {
 }
 
 class _AddActivityState extends State<AddActivity> {
-  String _project, _activity;
+  String _project, _activity, _iduser;
   DateTime _datePicked;
   List<dynamic> _listProject = List();
   List<dynamic> _listActivity = List();
@@ -30,7 +30,19 @@ class _AddActivityState extends State<AddActivity> {
       "activity": _activity,
       "date": controllerDate.text,
       "time": controllerDuration.text,
+      "iduser": _iduser,
       "remark": controllerRemark.text,
+    });
+    // print("Coba insert iduser");
+    // print(_iduser);
+  }
+
+  var id;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      id = preferences.getString("id");
+      _iduser = id;
     });
   }
 
@@ -55,6 +67,7 @@ class _AddActivityState extends State<AddActivity> {
   @override
   void initState() {
     super.initState();
+    getPref();
     getproject();
     getactivitylist();
   }

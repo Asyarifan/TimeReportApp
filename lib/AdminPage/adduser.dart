@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/AdminPage/model/managerModel.dart';
+
+import '../api.dart';
 
 class AddUser extends StatefulWidget {
   @override
@@ -8,23 +11,48 @@ class AddUser extends StatefulWidget {
 }
 
 class _AddUserState extends State<AddUser> {
+  String _manager;
+  var loading = false;
   int _rolevalue = 0;
+  //final list = new List<ManagerModel>();
+  List<dynamic> _listManager = List();
 
   TextEditingController controllerNIK = new TextEditingController();
   TextEditingController controllerName = new TextEditingController();
   TextEditingController controllerEmail = new TextEditingController();
   TextEditingController controllerRole = new TextEditingController();
 
-  void AddData() {
-    var url = "http://192.168.100.10/TimeReport/entryuser.php";
+  void AddData() async {
+    // var url = "http://192.168.100.10/TimeReport/entryuser.php";
 
-    http.post(url, body: {
+    // http.post(url, body: {
+    //   "nik": controllerNIK.text,
+    //   "name": controllerName.text,
+    //   "email": controllerEmail.text,
+    //   //"role": controllerRole.text,
+    //   "role": _rolevalue.toString(),
+    // });
+    await http.post(BaseUrl.entryUser, body: {
       "nik": controllerNIK.text,
       "name": controllerName.text,
       "email": controllerEmail.text,
-      //"role": controllerRole.text,
       "role": _rolevalue.toString(),
+      "parentid": _manager
     });
+  }
+
+  Future<List> getmanager() async {
+    final response = await http.get(BaseUrl.getListManager);
+    var listData = json.decode(response.body);
+    setState(() {
+      _listManager = listData;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getmanager();
   }
 
   void _handleRadioValueChange(int value) {
@@ -80,14 +108,30 @@ class _AddUserState extends State<AddUser> {
                         borderRadius: new BorderRadius.circular(20.0))),
               ),
               new Padding(padding: new EdgeInsets.only(top: 20.0)),
-              // new TextField(
-              //   controller: controllerRole,
-              //   decoration: new InputDecoration(
-              //       hintText: "Role",
-              //       labelText: "Role",
-              //       border: new OutlineInputBorder(
-              //           borderRadius: new BorderRadius.circular(20.0))),
-              // ),
+              new Row(
+                children: <Widget>[
+                  new Text(
+                    "Manager           ",
+                    style: new TextStyle(fontSize: 15.0, color: Colors.grey),
+                  ),
+                  new DropdownButton(
+                    hint: Text("Choose Manager"),
+                    value: _manager,
+                    items: _listManager.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item['name']),
+                        value: item['id'],
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _manager = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              new Padding(padding: new EdgeInsets.only(top: 20.0)),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

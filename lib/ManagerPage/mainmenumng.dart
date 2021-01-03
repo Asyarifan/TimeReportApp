@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test1/AdminPage/listdetailactivitynew.dart';
-import 'package:test1/home.dart';
-import 'package:test1/profile.dart';
-import 'package:test1/AdminPage/listprojectnew.dart';
-import 'package:test1/AdminPage/listusernew.dart';
+import 'package:test1/./profile.dart';
+import 'package:test1/./home.dart';
+import 'package:test1/ManagerPage/listActivityEmp.dart';
+import 'package:test1/changepassword.dart';
 
-class MainMenuAdmin extends StatefulWidget {
+class MainMenuManager extends StatefulWidget {
   final VoidCallback signOut;
 
-  MainMenuAdmin(this.signOut);
+  MainMenuManager(this.signOut);
+
   @override
-  _MainMenuAdminState createState() => _MainMenuAdminState();
+  _MainMenuManagerState createState() => _MainMenuManagerState();
 }
 
-class _MainMenuAdminState extends State<MainMenuAdmin> {
+class _MainMenuManagerState extends State<MainMenuManager> {
   int _SelectedTabIndex = 0;
-  String _role;
+  String _iduser;
   void _onNavBarTapped(int index) {
     setState(() {
       _SelectedTabIndex = index;
@@ -29,17 +29,6 @@ class _MainMenuAdminState extends State<MainMenuAdmin> {
     });
   }
 
-//  String email = "", nama = "";
-//  TabController tabController;
-
-  getPref() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    _role = preferences.getString("role");
-    print("Main Menu Admin");
-    print(_role);
-    setState(() {});
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -47,14 +36,23 @@ class _MainMenuAdminState extends State<MainMenuAdmin> {
     getPref();
   }
 
+//  String email = "", nama = "";
+//  TabController tabController;
+  var id;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    id = preferences.getString("id");
+    _iduser = id;
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final _listPage = <Widget>[
       HomeScreen(),
-      //ActivityScreen(),
-      ListProjectScreen(),
-      ListDetailActivityScreen(),
-      ListUserScreen()
+      ActivityEmpScreen(),
+      ChangePasswordScreen()
       //ProfileScreen(),
     ];
 
@@ -64,16 +62,12 @@ class _MainMenuAdminState extends State<MainMenuAdmin> {
         title: Text('Home'),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.list_sharp),
-        title: Text('Project'),
+        icon: Icon(Icons.people_sharp),
+        title: Text('Activity Team'),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.assignment_outlined),
-        title: Text('Activity'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person),
-        title: Text('User'),
+        icon: Icon(Icons.create_outlined),
+        title: Text('Change Password'),
       ),
     ];
 
@@ -89,7 +83,7 @@ class _MainMenuAdminState extends State<MainMenuAdmin> {
         length: 4,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Main Menu Admin"),
+            title: Text("Main Menu Manager"),
             actions: <Widget>[
               IconButton(
                 onPressed: () {

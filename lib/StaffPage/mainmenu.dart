@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test1/home.dart';
 import 'package:test1/profile.dart';
-import 'package:test1/listactivity.dart';
+import 'package:test1/StaffPage/listactivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainMenu extends StatefulWidget {
@@ -13,7 +13,7 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   int _SelectedTabIndex = 0;
-
+  String _iduser;
   void _onNavBarTapped(int index) {
     setState(() {
       _SelectedTabIndex = index;
@@ -34,6 +34,9 @@ class _MainMenuState extends State<MainMenu> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       id = preferences.getString("id");
+      _iduser = id;
+      // print('Coba Menu Staff dengan user id');
+      // print(_iduser);
     });
   }
 
@@ -42,8 +45,6 @@ class _MainMenuState extends State<MainMenu> {
     // TODO: implement initState
     super.initState();
     getPref();
-    print("Cek ID User Menu Staff");
-    print(id);
   }
 
   @override

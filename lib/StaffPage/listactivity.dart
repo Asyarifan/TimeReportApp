@@ -1,15 +1,40 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:test1/detailactivity.dart';
-import 'package:test1/addactivity.dart';
+import 'package:test1/StaffPage/detailactivity.dart';
+import 'package:test1/StaffPage/addactivity.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ActivityScreen extends StatelessWidget {
+class ActivityScreen extends StatefulWidget {
+  @override
+  _ActivityScreenState createState() => _ActivityScreenState();
+}
+
+class _ActivityScreenState extends State<ActivityScreen> {
+  String _iduser;
   Future<List> getdata() async {
-    final response =
-        await http.post("http://192.168.100.10/TimeReport/getdataactivity.php");
+    final response = await http
+        .post("http://192.168.100.10/TimeReport/getdataactivity.php", body: {
+      "id": _iduser,
+    });
     return json.decode(response.body);
+  }
+
+  var id;
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      id = preferences.getString("id");
+      _iduser = id;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPref();
   }
 
   @override
@@ -35,11 +60,6 @@ class ActivityScreen extends StatelessWidget {
         },
       ),
     );
-    // return Container(
-    //   child: Center(
-    //     child: Text('Menu Add Activity!'),
-    //   ),
-    // );
   }
 }
 

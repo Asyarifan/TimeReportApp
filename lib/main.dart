@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test1/AdminPage/mainmenuadmin.dart';
-import 'package:test1/mainmenu.dart';
+import 'package:test1/ManagerPage/mainmenumng.dart';
+import 'package:test1/StaffPage/mainmenu.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -58,7 +59,6 @@ class _LoginState extends State<Login> {
         _loginStatus = LoginStatus.signIn;
         savePref(value, emailAPI, namaAPI, id, role);
       });
-      //print(role);
       print(pesan);
     } else {
       print(pesan);
@@ -161,8 +161,10 @@ class _LoginState extends State<Login> {
         // print(userid);
         if (roleuser == "1") {
           return MainMenuAdmin(signOut);
-        } else {
+        } else if (roleuser == "2") {
           return MainMenu(signOut);
+        } else {
+          return MainMenuManager(signOut);
         }
         ;
 

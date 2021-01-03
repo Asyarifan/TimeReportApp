@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:test1/editactivity.dart';
+import 'package:test1/StaffPage/editactivity.dart';
 
 class DetailActivity extends StatefulWidget {
   List list;

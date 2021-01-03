@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import './listactivity.dart';
+import 'package:test1/StaffPage/listactivity.dart';
 
 class EditActivity extends StatefulWidget {
   final List list;
